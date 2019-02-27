@@ -2,49 +2,93 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Quick and Simple Tabs</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        .container--tabs .nav-tabs {
+            width: 100%;
+            margin: 0;
+            list-style-type: none;
+        }
 
+        .container--tabs .nav-tabs>li>a {
+            float: left;
+        }
 
-  <link rel="stylesheet" href="css/style.css">
+        .container--tabs .nav-tabs>li.active>a,
+        .container--tabs .nav-tabs>li.active>a:hover,
+        .container--tabs .nav-tabs>li.active>a:focus {
+            color: #555;
+            cursor: default;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-bottom-color: transparent;
+        }
 
+        .container--tabs .tab-content {
+            float: left;
+            width: 100%;
+        }
 
+        .container--tabs .tab-content>.tab-pane {
+            display: none;
+        }
+
+        .container--tabs .tab-content>.tab-pane.active {
+            display: block;
+        }
+
+        .container--tabs .tab-content>.active {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container--tabs">
+        <section class="row">
+            <ul class="nav nav-tabs">
+                <li class="mail active"><a href="#tab-1">Tab 1</a></li>
+                <li class="mail"><a href="#tab-2">Tab 2</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <p>1</p>
+                </div>
+                <div id="tab-2" class="tab-pane">
+                    <p>2</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        window.addEventListener("load", function () {
+            var myTabs = document.querySelectorAll("ul > li");
 
-  <div class="wrapper">
-    <ul class="tabs clearfix" data-tabgroup="first-tab-group">
-      <li class="mail"><a href="#tab1" class="active">Tab 1</a></li>
-      <li class="mail"><a href="#tab2">Tab 2</a></li>
-    </ul>
-    <section id="first-tab-group" class="tabgroup">
-      <div id="tab1">
-        <h2>Heading 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla deserunt consectetur ratione id tempore
-          laborum laudantium facilis reprehenderit beatae dolores ipsum nesciunt alias iusto dicta eius itaque
-          blanditiis modi velit.</p>
-      </div>
-      <div id="tab2">
-        <h2>Heading 2</h2>
-        <p>Adipisci autem obcaecati velit natus quos beatae explicabo at tempora minima voluptates deserunt eum
-          consectetur reiciendis placeat dolorem repellat in nam asperiores impedit voluptas iure repellendus unde
-          eveniet accusamus ex.</p>
-      </div>
-    </section>
-  </div>
-
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-
-
-  <script src="js/index.js"></script>
-
-
-
-
+            function myTabClicks(tabClickEvent) {
+                for (var i = 0; i < myTabs.length; i++) {
+                    myTabs[i].classList.remove("active");
+                }
+                var clickedTab = tabClickEvent.currentTarget;
+                clickedTab.classList.add("active");
+                tabClickEvent.preventDefault();
+                var myContentPanes = document.querySelectorAll(".tab-pane");
+                for (i = 0; i < myContentPanes.length; i++) {
+                    myContentPanes[i].classList.remove("active");
+                }
+                var anchorReference = tabClickEvent.target;
+                var activePaneId = anchorReference.getAttribute("href");
+                var activePane = document.querySelector(activePaneId);
+                activePane.classList.add("active");
+            }
+            for (i = 0; i < myTabs.length; i++) {
+                myTabs[i].addEventListener("click", myTabClicks)
+            }
+        });
+    </script>
 </body>
 
 </html>
